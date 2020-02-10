@@ -1,17 +1,110 @@
 import React from "react";
-// import "./App.css";
+import "./pages/css/NavBarBox.css";
+import "antd/dist/antd.css";
+import { Button, Row, Col, Slider, Form, Menu, Icon, Dropdown } from "antd";
+import { DatePicker } from "antd";
 import SearchPage from "./pages/searchpage";
 import LoginPage from "./pages/loginpage";
 import ListPage from "./pages/listpage";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-function App() {
-  // state = {};
-  return (
-    <div className="App">
+const { RangePicker } = DatePicker;
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nav_home: true,
+      nav_search: true,
+      nav_filters: false,
+      nav_login: true,
+      did_search: "",
+      visible: false
+    };
+  }
+
+  disp_filter() {
+    return (
+      <Form>
+        <Dropdown
+          overlay={
+            <Menu onClick={this.handleMenuClick}>
+              <Menu.Item key="1">
+                {" "}
+                <RangePicker />
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Slider range defaultValue={[1000, 10000]} />
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Button htmlType="submit">Apply</Button>
+              </Menu.Item>
+            </Menu>
+          }
+          onVisibleChange={this.handleVisibleChange}
+          visible={this.state.visible}
+        >
+          <a className="ant-dropdown-link" href="#">
+            <Button>Filters</Button> <Icon type="down" />
+          </a>
+        </Dropdown>
+      </Form>
+    );
+  }
+
+  handleMenuClick = e => {
+    if (e.key === "3") {
+      this.setState({ visible: false });
+    }
+  };
+
+  handleVisibleChange = flag => {
+    this.setState({ visible: flag });
+  };
+
+  handleSearch = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      console.log("Received values of form: ", values);
+    });
+  };
+
+  linkbuttons() {
+    return (
+      <div>
+        <Row id="navigation_bar">
+          <Col span={1}></Col>
+          <Col span={2}>
+            {" "}
+            <Link to="/">
+              <Button type="primary">Home</Button>
+            </Link>
+          </Col>
+          <Col span={1}></Col>
+          <Col span={6}>
+            <Link to="/search">
+              <Button type="primary">Items</Button>
+            </Link>
+          </Col>
+          <Col span={1}></Col>
+          <Col span={4}></Col>
+          <Col span={3}> {this.disp_filter()}</Col>
+          <Col span={2}></Col>
+          <Col span={1}></Col>
+          <Col span={2}>
+            <Link to="/login">
+              <Button type="primary">Login</Button>
+            </Link>
+          </Col>
+          <Col span={1}></Col>
+        </Row>
+      </div>
+    );
+  }
+
+  frontpagecontent() {
+    return (
       <Router>
-        <Link to="/">Search</Link>
-        <Link to="/search">Items</Link>
-        <Link to="/login">Login</Link>
+        {this.linkbuttons()}
         <Switch>
           <Route exact path="/">
             <SearchPage />
@@ -24,8 +117,10 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </div>
-  );
-}
+    );
+  }
 
-export default App;
+  render() {
+    return <div className="App">{this.frontpagecontent()}</div>;
+  }
+}

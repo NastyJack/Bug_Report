@@ -1,0 +1,14 @@
+#navigation_bar {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
+#navigation_bar > div {
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 25px;
+  align-items: center;
+  text-align: center;
+  background-color: lightskyblue;
+  height: 40px;
+}
