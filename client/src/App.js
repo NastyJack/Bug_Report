@@ -123,7 +123,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log("AAP", this.state);
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }

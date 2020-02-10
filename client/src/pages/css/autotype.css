@@ -1,3 +1,9 @@
+@media (max-width: 100px) {
+  .typing-words span {
+    display: none;
+  }
+}
+
 .typing-words span {
   position: absolute;
   top: 48.5%;

@@ -1,0 +1,20 @@
+#popup {
+  position: absolute;
+  z-index: 3;
+  width: 100vw;
+  pointer-events: none;
+  opacity: 0;
+  animation: 3s ease 0s normal forwards 1 fadeout;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
