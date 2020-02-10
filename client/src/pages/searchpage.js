@@ -87,7 +87,7 @@ class SearchPage extends React.Component {
               displaySugesstions: sugesstions
             },
             () => {
-              this.props.handleSearchResults(this.state.fetchedData);
+              this.props.handleSearchResults(this.state.fetchedData, value);
               if (this.state.displaySugesstions === false) {
                 this.props.history.push("/search");
               }

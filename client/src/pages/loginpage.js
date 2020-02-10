@@ -1,21 +1,35 @@
 import React from "react";
-import { Form, Icon, Input, Button } from "antd";
+import { Form, Icon, Input, Button, notification } from "antd";
 import axios from "axios";
 import Register from "../components/registeruser";
 import ReportSubmit from "../components/reportsubmit";
 import { message } from "antd";
+import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {
-  state = {
-    admin: false,
-    success: false
-    // rememberMe: false,
-    // user: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      admin: false,
+      success: false
+      // rememberMe: false,
+      // user: ""
+    };
+  }
 
   // componentDidMount() {
   //   console.log(this.props);
   // }
+
+  notification = () => {
+    return notification.open({
+      message: "Log in Successfull",
+      description: "",
+      onClick: () => {
+        console.log("Notification Clicked!");
+      }
+    });
+  };
   handleSubmit = event => {
     console.log("LOGIN PROPS", this.props);
     event.preventDefault();
@@ -32,6 +46,7 @@ class Login extends React.Component {
         .then(data => {
           // console.log(data);
           if (data && data.status === 200) {
+            this.notification();
             this.setState({
               admin: data.data.admin,
               success: data.data.success
@@ -54,8 +69,10 @@ class Login extends React.Component {
     console.log(this.state);
     const { getFieldDecorator } = this.props.form;
     if (this.state.success && this.state.admin) {
+      this.props.history.push("/register");
       return <Register />;
     } else if (this.state.success) {
+      this.props.history.push("/upload");
       return <ReportSubmit />;
     } else {
       return (
@@ -106,4 +123,4 @@ class Login extends React.Component {
   }
 }
 const LoginPage = Form.create({ name: "login-form" })(Login);
-export default LoginPage;
+export default withRouter(LoginPage);

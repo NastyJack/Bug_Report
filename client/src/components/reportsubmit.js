@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, DatePicker, Button } from "antd";
+import { Form, Input, DatePicker, Button, notification } from "antd";
 import moment from "moment";
 import UploadImage from "./uploadImage";
 import axios from "axios";
@@ -10,6 +10,16 @@ class ReportSubmitForm extends React.Component {
     costValue: 1000,
     url: "empty"
   };
+
+  notification() {
+    return notification.open({
+      message: "Report Submitted",
+      description: "",
+      onClick: () => {
+        console.log("Notification Clicked!");
+      }
+    });
+  }
 
   handleSubmit = event => {
     event.preventDefault();
@@ -28,6 +38,7 @@ class ReportSubmitForm extends React.Component {
         })
         .then(data => {
           if (data && data.status === 200) {
+            this.notification();
             console.log("Report Submitted");
           }
         });
@@ -44,6 +55,7 @@ class ReportSubmitForm extends React.Component {
       url: link
     });
   };
+
   render() {
     const { TextArea } = Input;
     const dateFormat = "DD/MM/YYYY";
@@ -51,6 +63,7 @@ class ReportSubmitForm extends React.Component {
     return (
       <div className="container">
         <div className="login-wrapper">
+          {this.Notification}
           <Form className="reportform" onSubmit={this.handleSubmit}>
             <h1>Upload Report</h1>
             <Form.Item>

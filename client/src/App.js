@@ -8,6 +8,8 @@ import SearchPage from "./pages/searchpage";
 import LoginPage from "./pages/loginpage";
 import ListPage from "./pages/listpage";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Register from "./components/registeruser";
+import ReportSubmit from "./components/reportsubmit";
 const { RangePicker } = DatePicker;
 
 export default class App extends React.Component {
@@ -20,14 +22,17 @@ export default class App extends React.Component {
       nav_login: true,
       visible: false,
       searchResult: [],
-      issearchResult: false
+      issearchResult: false,
+      logged_in: false,
+      searchKeyWord: ""
     };
   }
-  handleSearchResults = result => {
+  handleSearchResults = (result, keyword) => {
     console.log("Search Handler");
     this.setState({
       issearchResult: true,
-      searchResult: result
+      searchResult: result,
+      searchKeyWord: keyword
     });
   };
 
@@ -38,11 +43,10 @@ export default class App extends React.Component {
           overlay={
             <Menu onClick={this.handleMenuClick}>
               <Menu.Item key="1">
-                {" "}
                 <RangePicker />
               </Menu.Item>
               <Menu.Item key="2">
-                <Slider range defaultValue={[1000, 10000]} />
+                <Slider range={(0, 1000)} defaultValue={[20, 50]} />
               </Menu.Item>
               <Menu.Item key="3">
                 <Button htmlType="submit">Apply</Button>
@@ -72,24 +76,21 @@ export default class App extends React.Component {
 
   linkbuttons() {
     return (
-      <div className="navigation_container">
+      <div className="navigation_container" id="filter">
         <Row id="navigation_bar">
           <Col span={1}></Col>
           <Col span={2}>
-            {" "}
             <Link to="/">
               <Button type="primary">Home</Button>
             </Link>
           </Col>
           <Col span={1}></Col>
-          <Col span={6}>
-            <Link to="/search">
-              <Button type="primary">Items</Button>
-            </Link>
-          </Col>
+          <Col span={6}></Col>
           <Col span={1}></Col>
           <Col span={4}></Col>
-          <Col span={3}> {this.disp_filter()}</Col>
+          <Col span={3}>
+            <Route path="/search"> {this.disp_filter()}</Route>
+          </Col>
           <Col span={2}></Col>
           <Col span={1}></Col>
           <Col span={2}>
@@ -115,7 +116,13 @@ export default class App extends React.Component {
             <ListPage details={this.state.searchResult} />
           </Route>
           <Route path="/login">
-            <LoginPage />
+            <LoginPage logged_in={this.state.logged_in} />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/upload">
+            <ReportSubmit />
           </Route>
         </Switch>
       </Router>
@@ -123,7 +130,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log("AAP", this.state);
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }

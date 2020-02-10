@@ -12,3 +12,7 @@
   background-color: lightskyblue;
   height: 40px;
 }
+
+#filter {
+  z-index: 3;
+}

@@ -1,7 +1,13 @@
+@media (max-width: 100px) {
+  .typing-words span {
+    display: none;
+  }
+}
+
 .typing-words span {
   position: absolute;
-  top: 48.6%;
-  left: 14em;
+  top: 48.5%;
+  left: 27.5em;
   pointer-events: none;
   text-align: left;
   z-index: 3;
