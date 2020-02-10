@@ -42,6 +42,7 @@ class SearchPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log("COOKIES");
     const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
     if (searchHistory !== null) {
       this.setState({
@@ -59,8 +60,8 @@ class SearchPage extends React.Component {
     }
     if (this.state.history.length > 0) {
       this.setState({
-        sugg: true,
-        results: this.state.history.slice(start, this.state.history.length)
+        displaySugesstions: true,
+        fetchedData: this.state.history.slice(start, this.state.history.length)
       });
     }
   };
@@ -86,7 +87,7 @@ class SearchPage extends React.Component {
               displaySugesstions: sugesstions
             },
             () => {
-              this.props.handleSearchResults(this.state.fetchedData);
+              this.props.handleSearchResults(this.state.fetchedData, value);
               if (this.state.displaySugesstions === false) {
                 this.props.history.push("/search");
               }
@@ -102,6 +103,7 @@ class SearchPage extends React.Component {
   };
 
   handleFocus = () => {
+    console.log("FOCUS");
     let start = 0;
     if (this.state.history.length > 0 && this.state.history.length < 5) {
       start = 0;
@@ -110,8 +112,8 @@ class SearchPage extends React.Component {
     }
     if (this.state.history.length > 0) {
       this.setState({
-        sugg: true,
-        results: this.state.history.slice(start, this.state.history.length)
+        displaySugesstions: true,
+        fetchedData: this.state.history.slice(start, this.state.history.length)
       });
     }
   };
@@ -142,10 +144,11 @@ class SearchPage extends React.Component {
           }}
           onSearch={value => {
             this.fetchSearchData(value, false);
+            this.handleSearch(value);
           }}
         />
         {this.state.fetchedData.length > 0 && this.state.displaySugesstions ? (
-          <div className="search-suggestions">
+          <div className="abcd">
             <Suggestions
               results={this.state.fetchedData}
               handleSuggestions={this.fetchSearchData}

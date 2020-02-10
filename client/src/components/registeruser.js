@@ -45,57 +45,59 @@ class RegisterUser extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="container">
-        <Form className="register-form" onSubmit={this.handleSubmit}>
-          <h1>Register User</h1>
-          <Form.Item>
-            {getFieldDecorator("email", {
-              rules: [{ required: true, message: "Please enter email id" }]
-            })(
-              <Input
-                type="email"
-                prefix={
-                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                placeholder="Enter your mail id"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("password", {
-              rules: [{ required: true, message: "Enter your password" }]
-            })(
-              <Input
-                type="password"
-                placeholder="Enter password"
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("confirmpassword", {
-              rules: [{ required: true, message: "Enter your password" }]
-            })(
-              <Input
-                type="password"
-                placeholder="Re-type password"
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Register User
-            </Button>
-          </Form.Item>
-        </Form>
+        <div className="login-wrapper">
+          <Form className="register-form" onSubmit={this.handleSubmit}>
+            <h1>Register User</h1>
+            <Form.Item>
+              {getFieldDecorator("email", {
+                rules: [{ required: true, message: "Please enter email id" }]
+              })(
+                <Input
+                  type="email"
+                  prefix={
+                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                  placeholder="Enter your mail id"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("password", {
+                rules: [{ required: true, message: "Enter your password" }]
+              })(
+                <Input
+                  type="password"
+                  placeholder="Enter password"
+                  prefix={
+                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("confirmpassword", {
+                rules: [{ required: true, message: "Enter your password" }]
+              })(
+                <Input
+                  type="password"
+                  placeholder="Re-type password"
+                  prefix={
+                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                  }
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
+                Register User
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     );
   }

@@ -22,6 +22,10 @@ export default class ListPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("PREV PROPS", prevProps);
+    console.log("prev STATE", prevState);
+    console.log("THIS STATE", this.state);
+    console.log("PROPS", this.props);
     if (
       prevProps &&
       prevProps.details.length !== this.props &&

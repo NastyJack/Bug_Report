@@ -23,14 +23,16 @@ export default class App extends React.Component {
       visible: false,
       searchResult: [],
       issearchResult: false,
-      logged_in: false
+      logged_in: false,
+      searchKeyWord: ""
     };
   }
-  handleSearchResults = result => {
+  handleSearchResults = (result, keyword) => {
     console.log("Search Handler");
     this.setState({
       issearchResult: true,
-      searchResult: result
+      searchResult: result,
+      searchKeyWord: keyword
     });
   };
 
@@ -41,7 +43,6 @@ export default class App extends React.Component {
           overlay={
             <Menu onClick={this.handleMenuClick}>
               <Menu.Item key="1">
-                {" "}
                 <RangePicker />
               </Menu.Item>
               <Menu.Item key="2">
@@ -75,7 +76,7 @@ export default class App extends React.Component {
 
   linkbuttons() {
     return (
-      <div id="filter">
+      <div className="navigation_container" id="filter">
         <Row id="navigation_bar">
           <Col span={1}></Col>
           <Col span={2}>
