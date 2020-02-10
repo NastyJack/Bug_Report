@@ -38,7 +38,7 @@ export default class App extends React.Component {
                 <RangePicker />
               </Menu.Item>
               <Menu.Item key="2">
-                <Slider range defaultValue={[1000, 10000]} />
+                <Slider range={(0, 1000)} defaultValue={[20, 50]} />
               </Menu.Item>
               <Menu.Item key="3">
                 <Button htmlType="submit">Apply</Button>
