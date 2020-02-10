@@ -1,5 +1,6 @@
 import React from "react";
 import "./pages/css/NavBarBox.css";
+import "./App.css";
 import "antd/dist/antd.css";
 import { Button, Row, Col, Slider, Form, Menu, Icon, Dropdown } from "antd";
 import { DatePicker } from "antd";
@@ -18,9 +19,13 @@ export default class App extends React.Component {
       nav_filters: false,
       nav_login: true,
       did_search: "",
-      visible: false
+      visible: false,
+      searchResult: false
     };
   }
+  handleSearchResults = () => {
+    console.log("Search Handler");
+  };
 
   disp_filter() {
     return (
@@ -59,13 +64,6 @@ export default class App extends React.Component {
 
   handleVisibleChange = flag => {
     this.setState({ visible: flag });
-  };
-
-  handleSearch = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      console.log("Received values of form: ", values);
-    });
   };
 
   linkbuttons() {
@@ -107,7 +105,7 @@ export default class App extends React.Component {
         {this.linkbuttons()}
         <Switch>
           <Route exact path="/">
-            <SearchPage />
+            <SearchPage handleSearchResults={this.handleSearchResults} />
           </Route>
           <Route path="search">
             <ListPage />

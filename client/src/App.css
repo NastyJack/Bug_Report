@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.searchbar {
+  position: absolute;
+  display: flex;
+  width: 700px !important;
+  top: 50%;
+  margin: 0 auto;
+  transform: translate(-50%, -50%);
+}
