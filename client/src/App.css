@@ -115,11 +115,12 @@ ul.navbar-custom {
   overflow-x: hidden;
 }
 
-.searchbar {
+#searchbox_center {
   position: absolute;
-  display: flex;
+  /* display: flex; */
   width: 700px !important;
   top: 50%;
+  left: 50%;
   margin: 0 auto;
   transform: translate(-50%, -50%);
 }
