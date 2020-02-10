@@ -16,3 +16,7 @@
 #filter {
   z-index: 3;
 }
+
+body {
+  background-color: black !important;
+}
