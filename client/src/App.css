@@ -108,3 +108,7 @@ body {
 .ant-list-item {
   background-color: rgba(255, 255, 255, 0.92);
 }
+
+.ant-modal-content {
+  width: 150%;
+}

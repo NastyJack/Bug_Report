@@ -27,7 +27,7 @@ export default class Model extends React.Component {
   render() {
     const { visible, loading } = this.state;
     return (
-      <div>
+      <div className="model_display">
         <Modal
           visible={visible}
           title="Report Details"
