@@ -10,7 +10,10 @@ import ListPage from "./pages/listpage";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Register from "./components/registeruser";
 import ReportSubmit from "./components/reportsubmit";
+import moment from "moment";
 const { RangePicker } = DatePicker;
+// const { getFieldDecorator } = this.props.form;
+const dateFormat = "YYYY-MM-DD";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,6 +39,15 @@ export default class App extends React.Component {
     });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of FILTER: ", values);
+      }
+    });
+  };
+
   disp_filter() {
     return (
       <Form>
@@ -43,13 +55,28 @@ export default class App extends React.Component {
           overlay={
             <Menu onClick={this.handleMenuClick}>
               <Menu.Item key="1">
-                <RangePicker />
+                <Form.Item>
+                  <RangePicker
+                    defaultValue={[
+                      moment("2015-06-06", dateFormat),
+                      moment("2015-06-07", dateFormat)
+                    ]}
+                  />
+                </Form.Item>
               </Menu.Item>
-              <Menu.Item key="2">
-                <Slider range={(0, 1000)} defaultValue={[20, 50]} />
+
+              <Menu.Item key="2" id="slider">
+                <Form.Item>
+                  <Slider
+                    min={100}
+                    max={1000}
+                    range
+                    defaultValue={[200, 500]}
+                  />
+                </Form.Item>
               </Menu.Item>
-              <Menu.Item key="3">
-                <Button htmlType="submit">Apply</Button>
+              <Menu.Item key="3" id="applyfilter">
+                <Button onClick={e => this.handleSubmit}>Apply</Button>
               </Menu.Item>
             </Menu>
           }

@@ -1,6 +1,7 @@
 #navigation_bar {
   position: absolute;
   top: 0;
+
   width: 100vw;
 }
 #navigation_bar > div {
@@ -15,8 +16,4 @@
 
 #filter {
   z-index: 3;
-}
-
-body {
-  background-color: black !important;
 }

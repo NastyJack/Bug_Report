@@ -6,8 +6,8 @@
 
 .typing-words span {
   position: absolute;
-  top: 48.5%;
-  left: 27.5em;
+  margin-top: 0.7em;
+  margin-left: -3em;
   pointer-events: none;
   text-align: left;
   z-index: 3;
