@@ -82,7 +82,6 @@ export default class SearchPage extends React.Component {
           }}
           onSearch={value => {
             this.fetchSearchData(value, false);
-            // this.props.handleSearchResults(this.state.fetchedData, false);
           }}
         />
         {this.state.fetchedData.length > 0 && this.state.displaySugesstions ? (

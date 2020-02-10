@@ -8,11 +8,15 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 export default class App extends React.Component {
   state = {
-    searchResult: false
+    issearchResult: false,
+    searchResults: []
   };
 
   handleSearchResults = () => {
     console.log("Search Handler");
+    this.setState({
+      issearchResult: true
+    });
   };
 
   render() {
