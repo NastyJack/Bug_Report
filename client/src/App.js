@@ -18,13 +18,17 @@ export default class App extends React.Component {
       nav_search: true,
       nav_filters: false,
       nav_login: true,
-      did_search: "",
       visible: false,
-      searchResult: false
+      searchResult: [],
+      issearchResult: false
     };
   }
-  handleSearchResults = () => {
+  handleSearchResults = result => {
     console.log("Search Handler");
+    this.setState({
+      issearchResult: true,
+      searchResult: result
+    });
   };
 
   disp_filter() {
@@ -107,10 +111,10 @@ export default class App extends React.Component {
           <Route exact path="/">
             <SearchPage handleSearchResults={this.handleSearchResults} />
           </Route>
-          <Route path="search">
-            <ListPage />
+          <Route path="/search">
+            <ListPage details={this.state.searchResult} />
           </Route>
-          <Route path="login">
+          <Route path="/login">
             <LoginPage />
           </Route>
         </Switch>
@@ -119,6 +123,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log("AAP", this.state);
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }

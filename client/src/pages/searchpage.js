@@ -2,11 +2,13 @@ import React from "react";
 import { Input } from "antd";
 import axios from "axios";
 import Suggestions from "../components/suggestions";
+import { withRouter } from "react-router-dom";
+
 import "./css/autotype.css";
 
 const { Search } = Input;
 
-export default class SearchPage extends React.Component {
+class SearchPage extends React.Component {
   state = {
     autotype: true,
     fetchedData: [],
@@ -77,10 +79,18 @@ export default class SearchPage extends React.Component {
           console.log(data);
         }
         if (data && data.status === 200 && Object.keys(data.data).length > 0) {
-          this.setState({
-            fetchedData: data.data,
-            displaySugesstions: sugesstions
-          });
+          this.setState(
+            {
+              fetchedData: data.data,
+              displaySugesstions: sugesstions
+            },
+            () => {
+              this.props.handleSearchResults(this.state.fetchedData);
+              if (this.state.displaySugesstions === false) {
+                this.props.history.push("/search");
+              }
+            }
+          );
         } else {
           console.log("No report found");
         }
@@ -130,7 +140,6 @@ export default class SearchPage extends React.Component {
           }}
           onSearch={value => {
             this.fetchSearchData(value, false);
-            // this.props.handleSearchResults(this.state.fetchedData, false);
           }}
         />
         {this.state.fetchedData.length > 0 && this.state.displaySugesstions ? (
@@ -145,3 +154,5 @@ export default class SearchPage extends React.Component {
     );
   }
 }
+
+export default withRouter(SearchPage);
