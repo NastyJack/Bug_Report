@@ -12,7 +12,8 @@ class SearchPage extends React.Component {
   state = {
     autotype: true,
     fetchedData: [],
-    displaySugesstions: false
+    displaySugesstions: false,
+    history: []
   };
 
   AutoType() {
@@ -120,6 +121,7 @@ class SearchPage extends React.Component {
       <div id="searchbox_center">
         {this.AutoType()}
         <Search
+          onFocus={this.handleFocus}
           className="searchbar"
           onClick={e => {
             this.setState({ autotype: false });

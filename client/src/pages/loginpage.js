@@ -8,9 +8,9 @@ import { message } from "antd";
 class Login extends React.Component {
   state = {
     admin: false,
-    success: false,
-    rememberMe: false,
-    user: ""
+    success: false
+    // rememberMe: false,
+    // user: ""
   };
 
   // componentDidMount() {
@@ -36,7 +36,7 @@ class Login extends React.Component {
               admin: data.data.admin,
               success: data.data.success
             });
-            this.props.handleLogin(this.state.admin, this.state.success);
+            // this.props.handleLogin(this.state.admin, this.state.success);
           }
         })
         .catch(error => {
@@ -51,10 +51,11 @@ class Login extends React.Component {
 
   render() {
     console.log("LOGIN PAGE");
+    console.log(this.state);
     const { getFieldDecorator } = this.props.form;
-    if (this.props.isLoggedIn && this.props.admin) {
+    if (this.state.success && this.state.admin) {
       return <Register />;
-    } else if (this.props.isLoggedIn) {
+    } else if (this.state.success) {
       return <ReportSubmit />;
     } else {
       return (
