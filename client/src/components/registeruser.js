@@ -1,9 +1,19 @@
 import React from "react";
-import { Form, Icon, Input, Button } from "antd";
+import { Form, Icon, Input, Button, notification } from "antd";
 import axios from "axios";
 import { withRouter } from "react-router";
 
 class RegisterUser extends React.Component {
+  notification = () => {
+    return notification.open({
+      message: "Registeration Successfull.",
+      description: "Thank you for joining our great big team!",
+      onClick: () => {
+        console.log("Notification Clicked!");
+      }
+    });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -17,6 +27,7 @@ class RegisterUser extends React.Component {
             })
             .then(data => {
               if (data && data.status === 200) {
+                this.notification();
                 this.props.history.push("/login");
               }
             })
