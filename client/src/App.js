@@ -72,7 +72,7 @@ export default class App extends React.Component {
 
   linkbuttons() {
     return (
-      <div>
+      <div className="navigation_container">
         <Row id="navigation_bar">
           <Col span={1}></Col>
           <Col span={2}>

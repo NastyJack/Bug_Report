@@ -50,55 +50,61 @@ class ReportSubmitForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="container">
-        <Form className="reportform" onSubmit={this.handleSubmit}>
-          <h1>Upload Report</h1>
-          <Form.Item>
-            {getFieldDecorator("title", {
-              rules: [{ required: true, message: "Enter Report Title" }]
-            })(<Input placeholder="Report Title" type="text" />)}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("shortDescription", {
-              rules: [{ required: true, message: "Enter Short Description" }]
-            })(
-              <TextArea
-                row={2}
-                placeholder="Short description of report"
-                type="text"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("description", {
-              rules: [{ required: true, message: "Enter Report Description" }]
-            })(
-              <TextArea row={4} placeholder="Report Description" type="text" />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator("publishedDate", {
-              rules: [{ required: true, message: "Enter Published Date" }]
-            })(
-              <DatePicker
-                defaultValue={moment("01/01/2018", dateFormat)}
-                format={dateFormat}
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            <ReportCost handleCost={this.handleCost} />
-          </Form.Item>
-          <Form.Item>
-            <UploadImage handleImage={this.handleImage} />
-          </Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Upload Report
-          </Button>
-        </Form>
+        <div className="login-wrapper">
+          <Form className="reportform" onSubmit={this.handleSubmit}>
+            <h1>Upload Report</h1>
+            <Form.Item>
+              {getFieldDecorator("title", {
+                rules: [{ required: true, message: "Enter Report Title" }]
+              })(<Input placeholder="Report Title" type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("shortDescription", {
+                rules: [{ required: true, message: "Enter Short Description" }]
+              })(
+                <TextArea
+                  row={2}
+                  placeholder="Short description of report"
+                  type="text"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("description", {
+                rules: [{ required: true, message: "Enter Report Description" }]
+              })(
+                <TextArea
+                  row={4}
+                  placeholder="Report Description"
+                  type="text"
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator("publishedDate", {
+                rules: [{ required: true, message: "Enter Published Date" }]
+              })(
+                <DatePicker
+                  defaultValue={moment("01/01/2018", dateFormat)}
+                  format={dateFormat}
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              <ReportCost handleCost={this.handleCost} />
+            </Form.Item>
+            <Form.Item>
+              <UploadImage handleImage={this.handleImage} />
+            </Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Upload Report
+            </Button>
+          </Form>
+        </div>
       </div>
     );
   }

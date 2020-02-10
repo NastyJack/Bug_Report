@@ -60,44 +60,46 @@ class Login extends React.Component {
     } else {
       return (
         <div className="container">
-          <Form className="login-form" onSubmit={this.handleSubmit}>
-            <h1>Login</h1>
-            <Form.Item>
-              {getFieldDecorator("email", {
-                rules: [{ required: true, message: "Please enter email id" }]
-              })(
-                <Input
-                  type="email"
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Enter your mail id"
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [{ required: true, message: "Enter your password" }]
-              })(
-                <Input
-                  type="password"
-                  placeholder="Enter password"
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                />
-              )}
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Log in
-              </Button>
-            </Form.Item>
-          </Form>
+          <div className="login-wrapper">
+            <Form className="login-form" onSubmit={this.handleSubmit}>
+              <h1>Login</h1>
+              <Form.Item>
+                {getFieldDecorator("email", {
+                  rules: [{ required: true, message: "Please enter email id" }]
+                })(
+                  <Input
+                    type="email"
+                    prefix={
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    placeholder="Enter your mail id"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator("password", {
+                  rules: [{ required: true, message: "Enter your password" }]
+                })(
+                  <Input
+                    type="password"
+                    placeholder="Enter password"
+                    prefix={
+                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                >
+                  Log in
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       );
     }
