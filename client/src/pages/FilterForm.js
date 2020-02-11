@@ -39,35 +39,37 @@ class FilterForm extends React.Component {
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.pop()}>
+      <Form onSubmit={this.handleSubmit}>
         <Dropdown
           overlay={
-            <Menu onClick={this.handleMenuClick}>
+            <Menu onClick={e => this.handleSubmit}>
               <Menu.Item key="1">
                 <Form.Item>
-                  <RangePicker
-                    defaultValue={[
-                      moment("2015-06-06", dateFormat),
-                      moment("2015-06-07", dateFormat)
-                    ]}
-                  />
+                  {getFieldDecorator("Datepicker", {
+                    // initialValue: moment([
+                    //   "2015",
+                    //   "06",
+                    //   "06",
+                    //   "2015",
+                    //   "06",
+                    //   "07"
+                    // ])
+                  })(<RangePicker />)}
                 </Form.Item>
               </Menu.Item>
 
               <Menu.Item key="2" id="slider">
                 <Form.Item>
-                  <Slider
-                    min={100}
-                    max={1000}
-                    range
-                    defaultValue={[200, 500]}
-                  />
+                  {getFieldDecorator("slider", {
+                    initialValue: 1
+                  })(<Slider min={100} max={1000} />)}
                 </Form.Item>
               </Menu.Item>
               <Menu.Item key="3" id="applyfilter">
                 {/* <Button onClick={e => this.handleSubmit()}>Apply</Button> */}
-                <Button htmlType="submit">Apply</Button>
+                <Button onClick={() => this.handleSubmit}>Apply</Button>
               </Menu.Item>
             </Menu>
           }

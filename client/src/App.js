@@ -10,7 +10,9 @@ import ListPage from "./pages/listpage";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Register from "./components/registeruser";
 import ReportSubmit from "./components/reportsubmit";
-import WrappedFilterForm from "./pages/FilterForm";
+import WrappedTimeRelatedForm from "./components/veryverybadfilter";
+import axios from "axios";
+// import WrappedFilterForm from "./pages/FilterForm";
 
 const { RangePicker } = DatePicker;
 // const { getFieldDecorator } = this.props.form;
@@ -32,6 +34,7 @@ export default class App extends React.Component {
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSearchResults = (result, keyword) => {
     console.log("Search Handler");
     this.setState({
@@ -41,6 +44,43 @@ export default class App extends React.Component {
     });
   };
 
+  handleResult = results => {
+    console.log("MAIN DATE", results);
+    axios
+      .post("http://localhost:5000/filter/", {
+        title: this.state.searchKeyword,
+        start: results[0],
+        end: results[1]
+      })
+      .then(data => {
+        console.log("FILTER DATA", data);
+        // this.props.history.push("/search");
+      });
+  };
+
+  disp_filter = () => {
+    // console.log(this.state.searchKeyWord);
+    return (
+      <Dropdown
+        overlay={
+          <Menu onClick={this.handleMenuClick}>
+            <Menu.Item key="1">
+              <WrappedTimeRelatedForm
+                searchKeyword={this.state.searchKeyWord}
+                handleResult={this.handleResult}
+              />
+            </Menu.Item>
+          </Menu>
+        }
+        onVisibleChange={this.handleVisibleChange}
+        visible={this.state.visible}
+      >
+        <a className="ant-dropdown-link" href="#">
+          Hover me <Icon type="down" />
+        </a>
+      </Dropdown>
+    );
+  };
   handleSubmit = e => {
     console.log("Insidehandlesubmitform");
     e.preventDefault();
@@ -79,9 +119,7 @@ export default class App extends React.Component {
           <Col span={1}></Col>
           <Col span={4}></Col>
           <Col span={3}>
-            <Route path="/search">
-              <WrappedFilterForm />
-            </Route>
+            <Route path="/searched">{this.disp_filter}</Route>
           </Col>
           <Col span={2}></Col>
           <Col span={1}></Col>
