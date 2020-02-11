@@ -12,15 +12,8 @@ class Login extends React.Component {
     this.state = {
       admin: false,
       success: false
-
-      // rememberMe: false,
-      // user: ""
     };
   }
-
-  // componentDidMount() {
-  //   console.log(this.props);
-  // }
 
   notification = () => {
     return notification.open({
@@ -32,7 +25,6 @@ class Login extends React.Component {
     });
   };
   handleSubmit = event => {
-    console.log("LOGIN PROPS", this.props);
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -45,14 +37,12 @@ class Login extends React.Component {
           password: values.password
         })
         .then(data => {
-          // console.log(data);
           if (data && data.status === 200) {
             this.notification();
             this.setState({
               admin: data.data.admin,
               success: data.data.success
             });
-            // this.props.handleLogin(this.state.admin, this.state.success);
           }
         })
         .catch(error => {
@@ -66,8 +56,6 @@ class Login extends React.Component {
   };
 
   render() {
-    console.log("LOGIN PAGE");
-    console.log(this.state);
     const { getFieldDecorator } = this.props.form;
     if (this.state.success && this.state.admin) {
       this.props.history.push("/register");

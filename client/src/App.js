@@ -10,15 +10,15 @@ import ListPage from "./pages/listpage";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Register from "./components/registeruser";
 import ReportSubmit from "./components/reportsubmit";
-import WrappedTimeRelatedForm from "./components/veryverybadfilter";
+import moment from "moment";
 import axios from "axios";
-// import WrappedFilterForm from "./pages/FilterForm";
+import Suggestions from "./components/suggestions";
+import WrappedTimeRelatedForm from "./components/veryverybadfilter";
 
 const { RangePicker } = DatePicker;
-// const { getFieldDecorator } = this.props.form;
 const dateFormat = "YYYY-MM-DD";
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,8 +81,40 @@ export default class App extends React.Component {
       </Dropdown>
     );
   };
+
+  hideSuggestion = value => {
+    this.setState({
+      displaySugesstions: value
+    });
+  };
+  fetchSearchData = (value, sugesstions) => {
+    if (!value) return;
+    this.setState({
+      searchKeyWord: value
+    });
+    axios
+      .post("http://localhost:5000/search/", {
+        title: value
+      })
+      .then(data => {
+        if (data.status === 400) {
+          console.log(data);
+        }
+        if (data && data.status === 200 && Object.keys(data.data).length > 0) {
+          this.setState({
+            searchResult: data.data,
+            displaySugesstions: sugesstions
+          });
+        } else {
+          console.log("No report found");
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data.message);
+      });
+  };
+
   handleSubmit = e => {
-    console.log("Insidehandlesubmitform");
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -90,6 +122,63 @@ export default class App extends React.Component {
       }
     });
   };
+
+  handleOnChange = event => {
+    if (event.target.value.length > 0) {
+      this.fetchSearchData(event.target.value, true);
+    } else {
+      this.setState({
+        searchResult: []
+      });
+    }
+  };
+
+  // disp_filter() {
+  //   return (
+  //     <Form>
+  //       <Dropdown
+  //         overlay={
+  //           <Menu onClick={this.handleMenuClick}>
+  //             <Menu.Item key="1">
+  //               <Form.Item>
+  //                 <RangePicker
+  //                   defaultValue={[
+  //                     moment("2019-06-06", dateFormat),
+  //                     moment("2025-06-07", dateFormat)
+  //                   ]}
+  //                 />
+  //               </Form.Item>
+  //             </Menu.Item>
+
+  //             <Menu.Item key="2" id="slider">
+  //               <Form.Item>
+  //                 <Slider
+  //                   min={1000}
+  //                   max={10000}
+  //                   range
+  //                   defaultValue={[2000, 5000]}
+  //                 />
+  //               </Form.Item>
+  //             </Menu.Item>
+  //             <Menu.Item key="3" id="applyfilter">
+  //               <Button onClick={e => this.handleSubmit}>Apply</Button>
+  //             </Menu.Item>
+  //           </Menu>
+  //         }
+  //         onVisibleChange={this.handleVisibleChange}
+  //         visible={this.state.visible}
+  //       >
+  //         <a className="ant-dropdown-link" href="#">
+  //           <Button>
+  //             <Icon type="filter" />
+  //             Filters
+  //           </Button>{" "}
+  //           <Icon type="down" />
+  //         </a>
+  //       </Dropdown>
+  //     </Form>
+  //   );
+  // }
 
   handleMenuClick = e => {
     if (e.key === "3") {
@@ -119,7 +208,7 @@ export default class App extends React.Component {
           <Col span={1}></Col>
           <Col span={4}></Col>
           <Col span={3}>
-            <Route path="/searched">{this.disp_filter}</Route>
+            <Route path="/search"> {this.disp_filter()}</Route>
           </Col>
           <Col span={2}></Col>
           <Col span={1}></Col>
@@ -137,16 +226,78 @@ export default class App extends React.Component {
     );
   }
 
+  handleFocus = () => {
+    let start = 0;
+    if (this.state.history.length > 0 && this.state.history.length < 5) {
+      start = 0;
+    } else {
+      start = this.state.history.length - 5;
+    }
+    if (this.state.history.length > 0) {
+      this.setState({
+        displaySugesstions: true,
+        searchResult: this.state.history.slice(start, this.state.history.length)
+      });
+    }
+  };
+  ClearState = () => {
+    this.setState({
+      searchResult: [],
+      searchKeyWord: "",
+      displaySugesstions: false
+    });
+  };
+  handleSearchHistory = value => {
+    let history = JSON.parse(localStorage.getItem("search") || "[]");
+    history.push(value);
+    localStorage.setItem("search", JSON.stringify(history));
+  };
+  componentDidMount() {
+    // console.log("COOKIES");
+    const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
+    if (searchHistory !== null) {
+      this.setState({
+        history: searchHistory
+      });
+    }
+  }
+
+  // handleSearchKeyword = value => {
+  //   this.setState({
+  //     searchKeyWord: value
+  //   });
+  // };
   frontpagecontent() {
     return (
       <Router>
         {this.linkbuttons()}
         <Switch>
           <Route exact path="/">
-            <SearchPage handleSearchResults={this.handleSearchResults} />
+            <SearchPage
+              fetchSearchData={this.fetchSearchData}
+              handleOnChange={this.handleOnChange}
+              handleFocus={this.handleFocus}
+              handleSearchHistory={this.handleSearchHistory}
+              handleClearState={this.ClearState}
+              hideSuggestion={this.hideSuggestion}
+            />
+            {/* <div className="searchbox_center"> */}
+            {this.state.searchResult.length > 0 &&
+            this.state.displaySugesstions ? (
+              <Suggestions
+                results={this.state.searchResult}
+                handleSuggestions={this.fetchSearchData}
+              />
+            ) : null}
+            {/* </div> */}
           </Route>
           <Route path="/search">
-            <ListPage details={this.state.searchResult} />
+            <ListPage
+              search={this.state.searchKeyWord}
+              details={this.state.searchResult}
+              fetchSearchData={this.fetchSearchData}
+              ClearState={this.ClearState}
+            />
           </Route>
           <Route path="/login">
             <LoginPage logged_in={this.state.logged_in} />
@@ -163,6 +314,9 @@ export default class App extends React.Component {
   }
 
   render() {
+    // console.log(this.state, "DATA ");
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }
+
+export default App;

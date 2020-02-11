@@ -38,7 +38,7 @@ export default class UploadImage extends React.Component {
   };
 
   render() {
-    console.log(this.state.fileList, "FILE LIST");
+    // console.log(this.state.fileList, "FILE LIST");
     const { previewVisible, previewImage, fileList } = this.state;
     const uploadButton = (
       <div>

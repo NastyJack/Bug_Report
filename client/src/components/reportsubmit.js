@@ -45,6 +45,7 @@ class ReportSubmitForm extends React.Component {
     });
   };
   handleCost = value => {
+    // console.log(value, "COSt");
     this.setState({
       costValue: value
     });

@@ -5,7 +5,7 @@ router.route("/").post(async (req, res) => {
   console.log("FIler api", req.body);
   try {
     Report.find({
-      title: req.body.title,
+      title: { $regex: ".*" + req.body.title + ".*" },
       publishedDate: { $gte: req.body.start, $lte: req.body.end },
       cost: { $gte: req.body.costgt, $lte: req.body.costlt }
     }).then(data => {
