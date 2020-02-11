@@ -55,8 +55,6 @@ class SearchPage extends React.Component {
             this.props.handleOnChange(event);
           }}
           onSearch={value => {
-            // this.props.fetchSearchData(value, false);
-            // this.props.handleSearchHistory(value);
             this.props.hideSuggestion(false);
             this.props.history.push("/search");
           }}
