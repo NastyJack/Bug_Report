@@ -7,15 +7,24 @@ import { DatePicker } from "antd";
 import SearchPage from "./pages/searchpage";
 import LoginPage from "./pages/loginpage";
 import ListPage from "./pages/listpage";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect,
+  withRouter
+} from "react-router-dom";
 import Register from "./components/registeruser";
 import ReportSubmit from "./components/reportsubmit";
 import moment from "moment";
+import axios from "axios";
+import Suggestions from "./components/suggestions";
+
 const { RangePicker } = DatePicker;
-// const { getFieldDecorator } = this.props.form;
 const dateFormat = "YYYY-MM-DD";
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,9 +36,46 @@ export default class App extends React.Component {
       searchResult: [],
       issearchResult: false,
       logged_in: false,
-      searchKeyWord: ""
+      searchKeyWord: "",
+      displaySugesstions: false,
+      history: [],
+      isSearch: false
     };
   }
+
+  fetchSearchData = (value, sugesstions) => {
+    axios
+      .post("http://localhost:5000/search/", {
+        title: value
+      })
+      .then(data => {
+        if (data.status === 400) {
+          console.log(data);
+        }
+        if (data && data.status === 200 && Object.keys(data.data).length > 0) {
+          this.setState(
+            {
+              searchResult: data.data,
+              displaySugesstions: sugesstions,
+              searchKeyWord: value
+            }
+            // }),
+            // () => {
+            //   this.props.handleSearchResults(this.state.fetchedData, value);
+            //   if (this.state.displaySugesstions === false) {
+            //     this.props.history.push("/search");
+            //   }
+            // }
+          );
+        } else {
+          console.log("No report found");
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data.message);
+      });
+  };
+
   handleSearchResults = (result, keyword) => {
     console.log("Search Handler");
     this.setState({
@@ -46,6 +92,16 @@ export default class App extends React.Component {
         console.log("Received values of FILTER: ", values);
       }
     });
+  };
+
+  handleOnChange = event => {
+    if (event.target.value.length > 0) {
+      this.fetchSearchData(event.target.value, true);
+    } else {
+      this.setState({
+        searchResult: []
+      });
+    }
   };
 
   disp_filter() {
@@ -131,16 +187,81 @@ export default class App extends React.Component {
     );
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState, "COMPOENT");
+  }
+  handleFocus = () => {
+    console.log("FOCUS");
+    let start = 0;
+    if (this.state.history.length > 0 && this.state.history.length < 5) {
+      start = 0;
+    } else {
+      start = this.state.history.length - 5;
+    }
+    if (this.state.history.length > 0) {
+      this.setState({
+        displaySugesstions: true,
+        searchResult: this.state.history.slice(start, this.state.history.length)
+      });
+    }
+  };
+  ClearState = () => {
+    this.setState({
+      searchResult: [],
+      searchKeyWord: "",
+      displaySugesstions: false
+    });
+  };
+  handleSearch = value => {
+    let history = JSON.parse(localStorage.getItem("search") || "[]");
+    history.push(value);
+    localStorage.setItem("search", JSON.stringify(history));
+  };
+  componentDidMount() {
+    console.log("COOKIES");
+    const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
+    if (searchHistory !== null) {
+      this.setState({
+        history: searchHistory
+      });
+    }
+  }
+
+  handleSearchKeyword = value => {
+    this.setState({
+      searchKeyWord: value
+    });
+  };
   frontpagecontent() {
     return (
       <Router>
         {this.linkbuttons()}
         <Switch>
           <Route exact path="/">
-            <SearchPage handleSearchResults={this.handleSearchResults} />
+            <SearchPage
+              fetchSearchData={this.fetchSearchData}
+              handleFocus={this.handleFocus}
+              handleSearch={this.handleSearch}
+              handleOnChange={this.handleOnChange}
+              handleSearchKeyword={this.handleSearchKeyword}
+              handleClearState={this.ClearState}
+            />
+            {/* <div className="searchbox_center"> */}
+            {this.state.searchResult.length > 0 &&
+            this.state.displaySugesstions ? (
+              <Suggestions
+                results={this.state.searchResult}
+                handleSuggestions={this.fetchSearchData}
+              />
+            ) : null}
+            {/* </div> */}
           </Route>
           <Route path="/search">
-            <ListPage details={this.state.searchResult} />
+            <ListPage
+              search={this.state.searchKeyWord}
+              details={this.state.searchResult}
+              fetchSearchData={this.fetchSearchData}
+            />
           </Route>
           <Route path="/login">
             <LoginPage logged_in={this.state.logged_in} />
@@ -157,6 +278,10 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log(this.state, "DATA ");
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }
+
+export default App;
+// export default withRouter(App);

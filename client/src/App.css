@@ -79,7 +79,7 @@ ul.navbar-custom {
   overflow-x: hidden;
 }
 
-#searchbox_center {
+.searchbox_center {
   position: absolute;
   width: 700px !important;
   top: 30%;
@@ -111,4 +111,13 @@ body {
 
 .ant-modal-content {
   width: 150%;
+}
+
+.demo-infinite-container {
+  bottom: 33%;
+  left: 20%;
+  max-width: 63%;
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
 }

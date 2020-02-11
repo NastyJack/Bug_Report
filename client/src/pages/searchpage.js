@@ -2,7 +2,7 @@ import React from "react";
 import { Input } from "antd";
 import axios from "axios";
 import Suggestions from "../components/suggestions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 
 import "./css/autotype.css";
 
@@ -41,120 +41,123 @@ class SearchPage extends React.Component {
       );
   }
 
-  componentDidMount() {
-    console.log("COOKIES");
-    const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
-    if (searchHistory !== null) {
-      this.setState({
-        history: searchHistory
-      });
-    }
-  }
+  // componentDidMount() {
+  //   console.log("COOKIES");
+  //   const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
+  //   if (searchHistory !== null) {
+  //     this.setState({
+  //       history: searchHistory
+  //     });
+  //   }
+  // }
 
-  handleFocus = () => {
-    let start = 0;
-    if (this.state.history.length > 0 && this.state.history.length < 5) {
-      start = 0;
-    } else {
-      start = this.state.history.length - 5;
-    }
-    if (this.state.history.length > 0) {
-      this.setState({
-        displaySugesstions: true,
-        fetchedData: this.state.history.slice(start, this.state.history.length)
-      });
-    }
-  };
-  handleSearch = value => {
-    let history = JSON.parse(localStorage.getItem("search") || "[]");
-    history.push(value);
-    localStorage.setItem("search", JSON.stringify(history));
-  };
+  // handleFocus = () => {
+  //   let start = 0;
+  //   if (this.state.history.length > 0 && this.state.history.length < 5) {
+  //     start = 0;
+  //   } else {
+  //     start = this.state.history.length - 5;
+  //   }
+  //   if (this.state.history.length > 0) {
+  //     this.setState({
+  //       displaySugesstions: true,
+  //       fetchedData: this.state.history.slice(start, this.state.history.length)
+  //     });
+  //   }
+  // };
+  // handleSearch = value => {
+  //   let history = JSON.parse(localStorage.getItem("search") || "[]");
+  //   history.push(value);
+  //   localStorage.setItem("search", JSON.stringify(history));
+  // };
 
-  fetchSearchData = (value, sugesstions) => {
-    axios
-      .post("http://localhost:5000/search/", {
-        title: value
-      })
-      .then(data => {
-        if (data.status === 400) {
-          console.log(data);
-        }
-        if (data && data.status === 200 && Object.keys(data.data).length > 0) {
-          this.setState(
-            {
-              fetchedData: data.data,
-              displaySugesstions: sugesstions
-            },
-            () => {
-              this.props.handleSearchResults(this.state.fetchedData, value);
-              if (this.state.displaySugesstions === false) {
-                this.props.history.push("/search");
-              }
-            }
-          );
-        } else {
-          console.log("No report found");
-        }
-      })
-      .catch(error => {
-        console.log(error.response.data.message);
-      });
-  };
+  // fetchSearchData = (value, sugesstions) => {
+  //   axios
+  //     .post("http://localhost:5000/search/", {
+  //       title: value
+  //     })
+  //     .then(data => {
+  //       if (data.status === 400) {
+  //         console.log(data);
+  //       }
+  //       if (data && data.status === 200 && Object.keys(data.data).length > 0) {
+  //         this.setState(
+  //           {
+  //             fetchedData: data.data,
+  //             displaySugesstions: sugesstions
+  //           },
+  //           () => {
+  //             this.props.handleSearchResults(this.state.fetchedData, value);
+  //             if (this.state.displaySugesstions === false) {
+  //               this.props.history.push("/search");
+  //             }
+  //           }
+  //         );
+  //       } else {
+  //         console.log("No report found");
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error.response.data.message);
+  //     });
+  // };
 
-  handleFocus = () => {
-    console.log("FOCUS");
-    let start = 0;
-    if (this.state.history.length > 0 && this.state.history.length < 5) {
-      start = 0;
-    } else {
-      start = this.state.history.length - 5;
-    }
-    if (this.state.history.length > 0) {
-      this.setState({
-        displaySugesstions: true,
-        fetchedData: this.state.history.slice(start, this.state.history.length)
-      });
-    }
-  };
+  // handleFocus = () => {
+  //   console.log("FOCUS");
+  //   let start = 0;
+  //   if (this.state.history.length > 0 && this.state.history.length < 5) {
+  //     start = 0;
+  //   } else {
+  //     start = this.state.history.length - 5;
+  //   }
+  //   if (this.state.history.length > 0) {
+  //     this.setState({
+  //       displaySugesstions: true,
+  //       fetchedData: this.state.history.slice(start, this.state.history.length)
+  //     });
+  //   }
+  // };
 
   render() {
     return (
-      <div id="searchbox_center">
+      <div className="searchbox_center">
         {this.AutoType()}
         <Search
-          onFocus={this.handleFocus}
+          onFocus={this.props.handleFocus}
           className="searchbar"
           onClick={e => {
             this.setState({ autotype: false });
-            this.handleFocus();
+            // this.props.handleFocus();
           }}
           placeholder=""
           enterButton="Search"
           size="large"
           onChange={event => {
-            if (event.target.value.length > 0) {
-              this.fetchSearchData(event.target.value, true);
-            } else {
-              this.setState({
-                fetchedData: [],
-                displaySugesstions: false
-              });
-            }
+            this.props.handleOnChange(event);
+            this.props.handleSearchKeyword(event.target.value);
+            // if (event.target.value.length > 0) {
+            //   this.props.fetchSearchData(event.target.value, true);
+            // } else {
+            //   this.setState({
+            //     fetchedData: [],
+            //     displaySugesstions: false
+            //   });
+            // }
           }}
           onSearch={value => {
-            this.fetchSearchData(value, false);
-            this.handleSearch(value);
+            this.props.fetchSearchData(value, false);
+            this.props.handleSearch(value);
+            this.props.history.push("/search");
           }}
         />
-        {this.state.fetchedData.length > 0 && this.state.displaySugesstions ? (
+        {/* {this.state.fetchedData.length > 0 && this.state.displaySugesstions ? (
           <div className="abcd">
             <Suggestions
               results={this.state.fetchedData}
               handleSuggestions={this.fetchSearchData}
             />
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     );
   }

@@ -1,8 +1,9 @@
 import { List, message, Spin } from "antd";
 import InfiniteScroll from "react-infinite-scroller";
 import React from "react";
+import { withRouter } from "react-router-dom";
 
-export default class Suggestions extends React.Component {
+class Suggestions extends React.Component {
   state = {
     data: [],
     loading: false,
@@ -59,6 +60,7 @@ export default class Suggestions extends React.Component {
                     onClick={() => {
                       console.log("Clicked");
                       this.props.handleSuggestions(item.title || item, false);
+                      this.props.history.push("/search");
                     }}
                   />
                 </div>
@@ -76,3 +78,4 @@ export default class Suggestions extends React.Component {
     );
   }
 }
+export default withRouter(Suggestions);

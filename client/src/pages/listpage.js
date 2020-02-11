@@ -17,20 +17,23 @@ export default class ListPage extends React.Component {
   };
 
   componentDidMount() {
-    setInterval(this.getData, 10000);
-    this.getData();
+    if (this.props.search !== "") {
+      setInterval(this.getData, 10000);
+      this.getData();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("PREV PROPS", prevProps);
-    console.log("prev STATE", prevState);
-    console.log("THIS STATE", this.state);
-    console.log("PROPS", this.props);
-    if (
-      prevProps &&
-      prevProps.details.length !== this.props &&
-      this.props.details.length
-    ) {
+    // console.log("PREV PROPS", prevProps);
+    // console.log("prev STATE", prevState);
+    // console.log("THIS STATE", this.state);
+    // console.log("PROPS", this.props);
+    // if (
+    //   prevProps &&
+    //   prevProps.details.length !== this.props &&
+    //   this.props.details.length
+    // ) {
+    if (prevProps.details.length !== this.props.details.length) {
       console.log("NEW FILE FOUND IN DB");
     } else {
       console.log("NO NEW DATA");
