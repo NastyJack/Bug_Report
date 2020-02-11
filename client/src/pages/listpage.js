@@ -17,12 +17,18 @@ export default class ListPage extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.search !== "") {
-      setInterval(this.getData, 10000);
-      this.getData();
+    if (this.props.search !== "" && this.props.details.length > 0) {
+      // setInterval(this.getData, 10000);
+      this.searchPoll = setInterval(() => {
+        this.getData();
+      }, 10000);
     }
   }
-
+  componentWillUnmount() {
+    console.log("UNMOUNT");
+    // this.props.ClearState();
+    clearInterval(this.searchPoll);
+  }
   componentDidUpdate(prevProps, prevState) {
     // console.log("PREV PROPS", prevProps);
     // console.log("prev STATE", prevState);
@@ -40,9 +46,9 @@ export default class ListPage extends React.Component {
     }
   }
   getData = () => {
-    const ser = this.props.search;
-    if (ser) {
-      this.props.fetchSearchData(ser, true);
+    // const ser = this.props.search;
+    if (this.props.search) {
+      this.props.fetchSearchData(this.props.search, true);
     }
   };
 

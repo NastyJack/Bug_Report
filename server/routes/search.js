@@ -7,6 +7,7 @@ router.route("/").post((req, res) => {
     Report.find({
       title: { $regex: ".*" + req.body.title + ".*", $options: "i" }
       // $orderby: { publishedDate: -1 }
+      // $text: { $search: '"' + req.body.title + '"' }
     })
       .sort({ savedOn: -1 })
       .then(data => {
