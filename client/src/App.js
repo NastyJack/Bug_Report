@@ -133,7 +133,11 @@ class App extends React.Component {
           visible={this.state.visible}
         >
           <a className="ant-dropdown-link" href="#">
-            <Button>Filters</Button> <Icon type="down" />
+            <Button>
+              <Icon type="filter" />
+              Filters
+            </Button>{" "}
+            <Icon type="down" />
           </a>
         </Dropdown>
       </Form>
@@ -156,8 +160,13 @@ class App extends React.Component {
         <Row id="navigation_bar">
           <Col span={1}></Col>
           <Col span={2}>
-            <Link to="/" onClick={this.ClearState}>
-              <Button type="primary">Home</Button>
+            {/* <Link to="/" onClick={this.ClearState}>
+               <Button type="primary">Home</Button>*/}
+            <Link to="/">
+              <Button size="large">
+                <Icon type="home" />
+                Home
+              </Button>
             </Link>
           </Col>
           <Col span={1}></Col>
@@ -171,7 +180,10 @@ class App extends React.Component {
           <Col span={1}></Col>
           <Col span={2}>
             <Link to="/login">
-              <Button type="primary">Login</Button>
+              <Button size="large" type="default">
+                <Icon type="login" />
+                Login
+              </Button>
             </Link>
           </Col>
           <Col span={1}></Col>

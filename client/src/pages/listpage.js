@@ -82,11 +82,11 @@ export default class ListPage extends React.Component {
             pageSize: 3
           }}
           dataSource={listData}
-          footer={
-            <div>
-              <b>MORDOR INTELLIGENCE</b>
-            </div>
-          }
+          // footer={
+          //   <div>
+          //     <b>MORDOR INTELLIGENCE</b>
+          //   </div>
+          // }
           renderItem={item => (
             <div className="list-align">
               <List.Item
