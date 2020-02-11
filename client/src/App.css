@@ -96,7 +96,7 @@ ul.navbar-custom {
 }
 
 body {
-  transition: 0.5s;
+  transition: 0.25s;
   background-image: url("https://source.unsplash.com/5gGcn2PRrtc/1920x1080") !important;
   background-size: cover;
 }
