@@ -47,8 +47,6 @@ class Login extends React.Component {
         .then(data => {
           // console.log(data);
           if (data && data.status === 200) {
-            this.props.logged_in = true;
-            console.log(this.props.logged_in);
             this.notification();
             this.setState({
               admin: data.data.admin,
