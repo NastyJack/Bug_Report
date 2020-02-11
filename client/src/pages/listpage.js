@@ -18,27 +18,15 @@ export default class ListPage extends React.Component {
 
   componentDidMount() {
     if (this.props.search !== "" && this.props.details.length > 0) {
-      // setInterval(this.getData, 10000);
       this.searchPoll = setInterval(() => {
         this.getData();
       }, 10000);
     }
   }
   componentWillUnmount() {
-    console.log("UNMOUNT");
-    // this.props.ClearState();
     clearInterval(this.searchPoll);
   }
   componentDidUpdate(prevProps, prevState) {
-    // console.log("PREV PROPS", prevProps);
-    // console.log("prev STATE", prevState);
-    // console.log("THIS STATE", this.state);
-    // console.log("PROPS", this.props);
-    // if (
-    //   prevProps &&
-    //   prevProps.details.length !== this.props &&
-    //   this.props.details.length
-    // ) {
     if (prevProps.details.length !== this.props.details.length) {
       console.log("NEW FILE FOUND IN DB");
     } else {
@@ -46,14 +34,12 @@ export default class ListPage extends React.Component {
     }
   }
   getData = () => {
-    // const ser = this.props.search;
     if (this.props.search) {
       this.props.fetchSearchData(this.props.search, true);
     }
   };
 
   render() {
-    console.log("ITEMS", this.props);
     const listData = this.props.details;
     if (listData && listData.length < 0) {
       this.setState({
@@ -82,11 +68,6 @@ export default class ListPage extends React.Component {
             pageSize: 3
           }}
           dataSource={listData}
-          // footer={
-          //   <div>
-          //     <b>MORDOR INTELLIGENCE</b>
-          //   </div>
-          // }
           renderItem={item => (
             <div className="list-align">
               <List.Item

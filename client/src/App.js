@@ -58,7 +58,6 @@ class App extends React.Component {
           this.setState({
             searchResult: data.data,
             displaySugesstions: sugesstions
-            // searchKeyWord: value
           });
         } else {
           console.log("No report found");
@@ -68,15 +67,6 @@ class App extends React.Component {
         console.log(error.response.data.message);
       });
   };
-
-  // handleSearchResults = (result, keyword) => {
-  //   console.log("Search Handler");
-  //   this.setState({
-  //     // issearchResult: true,
-  //     searchResult: result,
-  //     searchKeyWord: keyword
-  //   });
-  // };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -107,8 +97,8 @@ class App extends React.Component {
                 <Form.Item>
                   <RangePicker
                     defaultValue={[
-                      moment("2015-06-06", dateFormat),
-                      moment("2015-06-07", dateFormat)
+                      moment("2019-06-06", dateFormat),
+                      moment("2025-06-07", dateFormat)
                     ]}
                   />
                 </Form.Item>
@@ -117,10 +107,10 @@ class App extends React.Component {
               <Menu.Item key="2" id="slider">
                 <Form.Item>
                   <Slider
-                    min={100}
-                    max={1000}
+                    min={1000}
+                    max={10000}
                     range
-                    defaultValue={[200, 500]}
+                    defaultValue={[2000, 5000]}
                   />
                 </Form.Item>
               </Menu.Item>
@@ -160,8 +150,6 @@ class App extends React.Component {
         <Row id="navigation_bar">
           <Col span={1}></Col>
           <Col span={2}>
-            {/* <Link to="/" onClick={this.ClearState}>
-               <Button type="primary">Home</Button>*/}
             <Link to="/">
               <Button size="large">
                 <Icon type="home" />
@@ -219,7 +207,7 @@ class App extends React.Component {
     localStorage.setItem("search", JSON.stringify(history));
   };
   componentDidMount() {
-    console.log("COOKIES");
+    // console.log("COOKIES");
     const searchHistory = JSON.parse(localStorage.getItem("search") || "[]");
     if (searchHistory !== null) {
       this.setState({
@@ -280,7 +268,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state, "DATA ");
+    // console.log(this.state, "DATA ");
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }

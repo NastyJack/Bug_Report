@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "antd";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import "./css/autotype.css";
 
 const { Search } = Input;
@@ -8,9 +8,6 @@ const { Search } = Input;
 class SearchPage extends React.Component {
   state = {
     autotype: true
-    // fetchedData: [],
-    // displaySugesstions: false,
-    // history: []
   };
 
   AutoType() {
