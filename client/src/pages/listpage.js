@@ -75,6 +75,7 @@ export default class ListPage extends React.Component {
                 extra={<img width={200} alt="logo" src={item.image} />}
               >
                 <List.Item.Meta
+                  className="hover-list-item"
                   title={
                     <div
                       onClick={() => this.handleModal(true, item)}

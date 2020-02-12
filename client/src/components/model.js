@@ -53,13 +53,15 @@ export default class Model extends React.Component {
               alt="Report image"
               style={{ float: "left" }}
             />
-            <h3>{this.props.item.title}</h3>
-            <p>{this.props.item.description}</p>
-            <p>
-              Published on:
-              {new Date(this.props.item.publishedDate).toDateString()}
-            </p>
-            <p>Price:{this.props.item.cost}</p>
+            <div class="modal-info">
+              <h3>{this.props.item.title}</h3>
+              <p>{this.props.item.description}</p>
+              <p>
+                Published on:
+                {new Date(this.props.item.publishedDate).toDateString()}
+              </p>
+              <p>Price:{this.props.item.cost}</p>
+            </div>
           </div>
         </Modal>
       </div>

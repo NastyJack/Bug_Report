@@ -83,7 +83,8 @@ ul.navbar-custom {
   position: absolute;
   width: 700px !important;
   top: 30%;
-  left: 20%;
+  left: 25%;
+  right: 25%;
   margin: 0 auto;
 }
 
@@ -102,41 +103,55 @@ body {
   overflow-x: hidden;
 }
 
-.ant-list-item div {
-  padding-left: 0.8em;
-}
-
-.ant-list-item {
-  background-color: rgba(255, 255, 255, 0.92);
-}
 .ant-list-pagination {
-  text-align: center;
+  text-align: center !important;
 }
 
-.ant-form {
-  z-index: 5;
-  position: absolute;
-  top: 20% !important;
-  left: -20% !important;
+.ant-list-item-meta-title {
+  transition: 0.5s;
+  width: 600px;
+}
+
+.ant-list-item-meta-title:hover {
+  size: 20px;
+  color: rgb(78, 78, 78);
+}
+.demo-infinite-container {
+  position: relative !important;
+  top: 220px;
+  left: 87px !important;
 }
 
 .ant-dropdown {
-  width: 150px;
-  height: 100px;
+  left: 20px;
+  width: 50px;
+}
+.ant-dropdown-menu div {
+  display: block;
+  position: relative;
+  left: 10px;
+  width: 220px;
 }
 
 .ant-dropdown-menu {
-  justify-content: center;
-  width: 370px;
-  height: 100px;
+  position: absolute;
+  text-align: center;
+  left: -100px;
+  width: 300px;
+  height: 120px;
 }
+
+.ant-dropdown-menu-item {
+  margin-left: -500px;
+}
+
 .ant-modal-content {
   width: 150%;
 }
 
 .demo-infinite-container {
   bottom: 33%;
-  left: 20%;
+  left: 8.5% !important;
   max-width: 63%;
   position: absolute;
   width: 100%;
@@ -144,4 +159,31 @@ body {
 }
 .ant-list-pagination {
   text-align: center;
+}
+
+.ant-list-item div {
+  padding-left: 0.8em;
+}
+
+.demo-infinite-container li {
+  position: relative;
+  margin-top: -5px;
+  background-color: rgba(255, 255, 255, 0.92);
+  width: 700px;
+}
+.ant-list-item:hover {
+  background-color: rgb(183, 235, 255);
+}
+
+.list-align:hover {
+  background-color: rgb(183, 235, 255);
+}
+
+.data-list {
+  background-color: transparent;
+}
+
+.modal-info {
+  position: relative;
+  left: 3vw;
 }
