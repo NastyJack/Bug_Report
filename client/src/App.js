@@ -75,8 +75,9 @@ class App extends React.Component {
         onVisibleChange={this.handleVisibleChange}
         visible={this.state.visible}
       >
-        <a className="ant-dropdown-link" href="#">
-          Hover me <Icon type="down" />
+        <a className="filterlink" href="#">
+          <Icon type="filter" />
+          Filters
         </a>
       </Dropdown>
     );

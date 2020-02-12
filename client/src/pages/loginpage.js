@@ -4,7 +4,7 @@ import axios from "axios";
 import Register from "../components/registeruser";
 import ReportSubmit from "../components/reportsubmit";
 import { message } from "antd";
-import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router";
 
 class Login extends React.Component {
   constructor(props) {
@@ -57,6 +57,7 @@ class Login extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+    console.log(this.state);
     if (this.state.success && this.state.admin) {
       this.props.history.push("/register");
       return <Register />;

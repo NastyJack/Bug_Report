@@ -51,7 +51,7 @@ class TimeRelatedForm extends React.Component {
     };
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="RangePicker">
+        <Form.Item label="">
           {getFieldDecorator("daterange", rangeConfig)(<RangePicker />)}
         </Form.Item>
 
