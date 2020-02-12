@@ -83,7 +83,8 @@ ul.navbar-custom {
   position: absolute;
   width: 700px !important;
   top: 30%;
-  left: 20%;
+  left: 25%;
+  right: 25%;
   margin: 0 auto;
 }
 
@@ -115,9 +116,10 @@ body {
   size: 20px;
   color: rgb(78, 78, 78);
 }
-.ant-list-items {
-  position: relative;
-  top: 12px;
+.demo-infinite-container {
+  position: relative !important;
+  top: 220px;
+  left: 87px !important;
 }
 
 .ant-dropdown {
@@ -149,7 +151,7 @@ body {
 
 .demo-infinite-container {
   bottom: 33%;
-  left: 20%;
+  left: 8.5% !important;
   max-width: 63%;
   position: absolute;
   width: 100%;
@@ -164,8 +166,8 @@ body {
 }
 
 .demo-infinite-container li {
-  position: absolute;
-  margin-top: -253px;
+  position: relative;
+  margin-top: -5px;
   background-color: rgba(255, 255, 255, 0.92);
   width: 700px;
 }
@@ -184,9 +186,4 @@ body {
 .modal-info {
   position: relative;
   left: 3vw;
-}
-
-.ant-modal-content {
-  position: absolute;
-  left: -140px;
 }

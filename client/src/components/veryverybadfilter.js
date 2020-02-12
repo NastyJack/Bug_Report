@@ -62,7 +62,7 @@ class TimeRelatedForm extends React.Component {
           }}
         >
           <Button type="primary" htmlType="submit">
-            Submit
+            Apply
           </Button>
         </Form.Item>
       </Form>
