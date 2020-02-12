@@ -6,8 +6,8 @@ router.route("/").post(async (req, res) => {
   try {
     Report.find({
       title: { $regex: ".*" + req.body.title + ".*" },
-      publishedDate: { $gte: req.body.start, $lte: req.body.end }
-      // cost: { $gte: req.body.costgt, $lte: req.body.costlt }
+      publishedDate: { $gte: req.body.start, $lte: req.body.end },
+      cost: { $gte: req.body.costgt, $lte: req.body.costlt }
     }).then(data => {
       console.log("DATA FILTER", data);
       res.status(200).json({ message: data });

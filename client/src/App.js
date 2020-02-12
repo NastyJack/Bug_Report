@@ -52,13 +52,15 @@ class App extends React.Component {
     });
   };
 
-  handleResult = results => {
-    console.log("MAIN DATE", results);
+  handleResult = (results, cost) => {
+    console.log("MAIN DATE", results, cost);
     axios
       .post("http://localhost:5000/filter/", {
         title: this.state.searchKeyWord,
         start: results[0],
-        end: results[1]
+        end: results[1],
+        costgt: cost[0],
+        costlt: cost[1]
       })
       .then(data => {
         console.log("FILTER DATA", data.data.message);

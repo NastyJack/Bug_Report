@@ -128,9 +128,8 @@ body {
 }
 .ant-dropdown-menu div {
   display: block;
-  position: relative;
+  width: fill;
   left: 10px;
-  width: 220px;
 }
 
 .ant-dropdown-menu {

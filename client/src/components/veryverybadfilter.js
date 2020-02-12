@@ -2,9 +2,13 @@ import { Slider, Form, DatePicker, TimePicker, Button } from "antd";
 import React from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import RangeSlider from "./range_slider ";
 const { MonthPicker, RangePicker } = DatePicker;
 
 class TimeRelatedForm extends React.Component {
+  state = {
+    costsRange: []
+  };
   formatDate = date => {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
@@ -18,8 +22,8 @@ class TimeRelatedForm extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    let fdates = [];
-
+    let fdates = [],
+      costRange = this.state.costsRange;
     this.props.form.validateFields((err, values) => {
       if (err) {
         return;
@@ -29,10 +33,14 @@ class TimeRelatedForm extends React.Component {
         fdates.push(this.formatDate(new Date(item._d).toDateString()));
       });
       console.log("FDARE", fdates);
-      this.props.handleResult(fdates);
+      this.props.handleResult(fdates, this.state.costsRange);
     });
   };
-
+  handleCosts = costs => {
+    this.setState({
+      costsRange: costs
+    });
+  };
   render() {
     console.log("PROPS", this.props.searchKeyword);
     const { getFieldDecorator } = this.props.form;
@@ -47,12 +55,15 @@ class TimeRelatedForm extends React.Component {
       }
     };
     const rangeConfig = {
-      rules: [{ type: "array", required: true, message: "Please select time!" }]
+      rules: [{ type: "array", required: true, message: "Please select date!" }]
     };
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="">
           {getFieldDecorator("daterange", rangeConfig)(<RangePicker />)}
+        </Form.Item>
+        <Form.Item>
+          <RangeSlider handleCosts={this.handleCosts} />
         </Form.Item>
 
         <Form.Item
