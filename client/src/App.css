@@ -110,7 +110,7 @@ body {
   background-color: rgba(255, 255, 255, 0.92);
 }
 .ant-list-pagination {
-  text-align: center;
+  text-align: center !important;
 }
 
 .ant-dropdown {
@@ -150,18 +150,4 @@ body {
 }
 .ant-list-pagination {
   text-align: center;
-}
-
-a {
-  transition: 0.25s;
-  background-color: transparent !important;
-  border-radius: 0;
-  border-color: transparent !important;
-}
-
-.ant-col-3:hover {
-  background-color: rgba(255, 255, 255, 0.678) !important;
-  border-color: transparent !important;
-  color: rgb(63, 63, 63) !important;
-  letter-spacing: 1.5px;
 }
