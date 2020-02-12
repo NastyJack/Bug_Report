@@ -7,7 +7,14 @@ import { DatePicker } from "antd";
 import SearchPage from "./pages/searchpage";
 import LoginPage from "./pages/loginpage";
 import ListPage from "./pages/listpage";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  withRouter,
+  Redirect
+} from "react-router-dom";
 import Register from "./components/registeruser";
 import ReportSubmit from "./components/reportsubmit";
 import moment from "moment";
@@ -30,7 +37,8 @@ class App extends React.Component {
       searchResult: [],
       issearchResult: false,
       logged_in: false,
-      searchKeyWord: ""
+      searchKeyWord: "",
+      isFilter: false
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -48,14 +56,25 @@ class App extends React.Component {
     console.log("MAIN DATE", results);
     axios
       .post("http://localhost:5000/filter/", {
-        title: this.state.searchKeyword,
+        title: this.state.searchKeyWord,
         start: results[0],
         end: results[1]
       })
       .then(data => {
-        console.log("FILTER DATA", data);
-        // this.props.history.push("/search");
-      });
+        console.log("FILTER DATA", data.data.message);
+        if (data.data.message && data.data.message.length > 0) {
+          this.setState({
+            searchResult: data.data.message,
+            searchKeyWord: ""
+          });
+        } else {
+          this.setState({
+            searchResult: [],
+            searchKeyWord: ""
+          });
+        }
+      })
+      .catch(erro => console.log("FILTER ERROR"));
   };
 
   disp_filter = () => {
@@ -132,53 +151,6 @@ class App extends React.Component {
       });
     }
   };
-
-  // disp_filter() {
-  //   return (
-  //     <Form>
-  //       <Dropdown
-  //         overlay={
-  //           <Menu onClick={this.handleMenuClick}>
-  //             <Menu.Item key="1">
-  //               <Form.Item>
-  //                 <RangePicker
-  //                   defaultValue={[
-  //                     moment("2019-06-06", dateFormat),
-  //                     moment("2025-06-07", dateFormat)
-  //                   ]}
-  //                 />
-  //               </Form.Item>
-  //             </Menu.Item>
-
-  //             <Menu.Item key="2" id="slider">
-  //               <Form.Item>
-  //                 <Slider
-  //                   min={1000}
-  //                   max={10000}
-  //                   range
-  //                   defaultValue={[2000, 5000]}
-  //                 />
-  //               </Form.Item>
-  //             </Menu.Item>
-  //             <Menu.Item key="3" id="applyfilter">
-  //               <Button onClick={e => this.handleSubmit}>Apply</Button>
-  //             </Menu.Item>
-  //           </Menu>
-  //         }
-  //         onVisibleChange={this.handleVisibleChange}
-  //         visible={this.state.visible}
-  //       >
-  //         <a className="ant-dropdown-link" href="#">
-  //           <Button>
-  //             <Icon type="filter" />
-  //             Filters
-  //           </Button>{" "}
-  //           <Icon type="down" />
-  //         </a>
-  //       </Dropdown>
-  //     </Form>
-  //   );
-  // }
 
   handleMenuClick = e => {
     if (e.key === "3") {
@@ -262,11 +234,6 @@ class App extends React.Component {
     }
   }
 
-  // handleSearchKeyword = value => {
-  //   this.setState({
-  //     searchKeyWord: value
-  //   });
-  // };
   frontpagecontent() {
     return (
       <Router>
@@ -292,12 +259,14 @@ class App extends React.Component {
             {/* </div> */}
           </Route>
           <Route path="/search">
-            <ListPage
-              search={this.state.searchKeyWord}
-              details={this.state.searchResult}
-              fetchSearchData={this.fetchSearchData}
-              ClearState={this.ClearState}
-            />
+            {
+              <ListPage
+                search={this.state.searchKeyWord}
+                details={this.state.searchResult}
+                fetchSearchData={this.fetchSearchData}
+                ClearState={this.ClearState}
+              />
+            }
           </Route>
           <Route path="/login">
             <LoginPage logged_in={this.state.logged_in} />
@@ -314,7 +283,7 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(this.state, "DATA ");
+    console.log(this.state, "DATA ");
     return <div className="App">{this.frontpagecontent()}</div>;
   }
 }
