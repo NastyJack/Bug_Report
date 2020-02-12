@@ -102,15 +102,22 @@ body {
   overflow-x: hidden;
 }
 
-.ant-list-item div {
-  padding-left: 0.8em;
-}
-
-.ant-list-item {
-  background-color: rgba(255, 255, 255, 0.92);
-}
 .ant-list-pagination {
   text-align: center !important;
+}
+
+.ant-list-item-meta-title {
+  transition: 0.5s;
+  width: 600px;
+}
+
+.ant-list-item-meta-title:hover {
+  size: 20px;
+  color: rgb(78, 78, 78);
+}
+.ant-list-items {
+  position: relative;
+  top: 12px;
 }
 
 .ant-dropdown {
@@ -150,4 +157,36 @@ body {
 }
 .ant-list-pagination {
   text-align: center;
+}
+
+.ant-list-item div {
+  padding-left: 0.8em;
+}
+
+.demo-infinite-container li {
+  position: absolute;
+  margin-top: -253px;
+  background-color: rgba(255, 255, 255, 0.92);
+  width: 700px;
+}
+.ant-list-item:hover {
+  background-color: rgb(183, 235, 255);
+}
+
+.list-align:hover {
+  background-color: rgb(183, 235, 255);
+}
+
+.data-list {
+  background-color: transparent;
+}
+
+.modal-info {
+  position: relative;
+  left: 3vw;
+}
+
+.ant-modal-content {
+  position: absolute;
+  left: -140px;
 }
