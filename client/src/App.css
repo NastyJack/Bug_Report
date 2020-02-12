@@ -118,7 +118,7 @@ body {
 }
 .demo-infinite-container {
   position: relative !important;
-  top: 220px;
+  top: 230px;
   left: 87px !important;
 }
 
@@ -185,5 +185,5 @@ body {
 
 .modal-info {
   position: relative;
-  left: 3vw;
+  left: 1vw;
 }
