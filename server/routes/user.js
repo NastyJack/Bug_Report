@@ -19,13 +19,6 @@ router.post("/login", (req, res) => {
       success: true,
       admin: true
     });
-    // const payload = { email: req.body.email, password: req.body.password };
-    // jwt.sign(payload, secret, { expiresIn: 360000 }, (err, token) => {
-    //   res.json({
-    //     success: true,
-    //     admin: true
-    //   });
-    // });
   } else {
     User.findOne({ email: req.body.email }).then(user => {
       if (!user) {
@@ -37,13 +30,6 @@ router.post("/login", (req, res) => {
             success: true,
             admin: false
           });
-          // const payload = { email: user.email, password: user.password };
-          // jwt.sign(payload, secret, { expiresIn: 360000 }, (err, token) => {
-          //   res.json({
-          //     success: true,
-          //     token: "bearer " + token
-          //   });
-          // });
         }
       });
     });
